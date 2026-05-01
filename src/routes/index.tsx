@@ -1,26 +1,51 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Navbar } from "@/components/portfolio/Navbar";
+import { Background } from "@/components/portfolio/Background";
+import { Hero } from "@/components/portfolio/Hero";
+import { About } from "@/components/portfolio/About";
+import { TechStack } from "@/components/portfolio/TechStack";
+import { Projects } from "@/components/portfolio/Projects";
+import { Experience } from "@/components/portfolio/Experience";
+import { AILab } from "@/components/portfolio/AILab";
+import { Certifications } from "@/components/portfolio/Certifications";
+import { Contact } from "@/components/portfolio/Contact";
+import { Chatbot } from "@/components/portfolio/Chatbot";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Huma Taj Muhammad — AI Developer & Generative AI Engineer" },
+      {
+        name: "description",
+        content:
+          "Huma Taj Muhammad — AI Developer in Lahore building intelligent web apps, computer vision systems, generative AI tools, chatbots, and Python backends.",
+      },
+      { property: "og:title", content: "Huma Taj Muhammad — AI Developer" },
+      {
+        property: "og:description",
+        content: "Crafting Intelligent AI Systems for the Future.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="relative min-h-screen text-foreground overflow-x-hidden">
+      <Background />
+      <Navbar />
+      <main>
+        <Hero />
+        <About />
+        <TechStack />
+        <Projects />
+        <Experience />
+        <AILab />
+        <Certifications />
+        <Contact />
+      </main>
+      <Chatbot />
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
