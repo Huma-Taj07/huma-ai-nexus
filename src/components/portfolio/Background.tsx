@@ -1,30 +1,22 @@
-/**
- * Animated background — particles + neural grid + gradient orbs.
- * Pure CSS/React for SSR safety.
- */
-export function Background() {
-  const particles = Array.from({ length: 24 });
-  return (
-    <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-      <div className="absolute inset-0 fusion-bg" />
-      <div className="absolute inset-0 neural-grid opacity-60" />
-      <div className="absolute -top-40 left-1/4 size-[500px] bg-core/20 rounded-full blur-[120px] animate-pulse-core" />
-      <div className="absolute top-1/3 -right-40 size-[600px] bg-plasma/15 rounded-full blur-[140px] animate-pulse-core" style={{ animationDelay: "3s" }} />
-      <div className="absolute bottom-0 left-1/3 size-[500px] bg-neon/15 rounded-full blur-[120px] animate-pulse-core" style={{ animationDelay: "5s" }} />
+import { ParticleField } from "./ParticleField";
 
-      {particles.map((_, i) => (
-        <span
-          key={i}
-          className="absolute size-1 rounded-full bg-plasma/60 animate-float"
-          style={{
-            top: `${(i * 37) % 100}%`,
-            left: `${(i * 53) % 100}%`,
-            animationDelay: `${(i % 7) * 0.8}s`,
-            animationDuration: `${6 + (i % 5)}s`,
-            opacity: 0.4,
-          }}
-        />
-      ))}
+export function Background() {
+  return (
+    <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 bg-[#050816]" />
+      <div
+        className="absolute inset-0 opacity-40"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(148,163,184,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.04) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+          maskImage: "radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent)",
+        }}
+      />
+      <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-primary/8 blur-[120px]" />
+      <div className="absolute -right-24 top-1/3 h-[400px] w-[400px] rounded-full bg-accent/6 blur-[100px]" />
+      <ParticleField />
+      <div className="noise-overlay absolute inset-0" />
     </div>
   );
 }

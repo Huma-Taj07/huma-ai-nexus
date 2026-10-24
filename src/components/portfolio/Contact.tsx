@@ -1,104 +1,99 @@
-import { motion } from "framer-motion";
-import { SectionHeader } from "./SectionHeader";
+import { useState } from "react";
+import { contactEmail, socialLinks } from "@/content/portfolio";
+import { FadeIn } from "./shared/FadeIn";
 
 export function Contact() {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Inquiry from ${form.name}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
+    );
+    window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+  };
+
   return (
-    <section id="contact" className="relative py-24 lg:py-32 px-4 sm:px-6 max-w-7xl mx-auto">
-      <div className="relative rounded-[2rem] overflow-hidden glass-strong p-8 sm:p-12 lg:p-16">
-        <div className="absolute -top-32 -right-32 size-96 bg-plasma/20 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute -bottom-32 -left-32 size-96 bg-core/20 rounded-full blur-[100px] pointer-events-none" />
+    <section id="contact" className="section-space border-t border-border">
+      <div className="container-lab">
+        <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
+          <FadeIn>
+            <p className="label-caps">Contact</p>
+            <h2 className="headline-lg mt-6 max-w-lg">
+              Interested in building intelligent systems together?
+            </h2>
+            <p className="mt-6 max-w-md text-[15px] leading-relaxed text-muted-foreground">
+              Open to AI engineering roles, research collaborations, and applied AI projects.
+              Based in Lahore, Pakistan — available for remote work.
+            </p>
 
-        <div className="relative grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionHeader
-              eyebrow="Get in touch"
-              title={<>Let's build <span className="gradient-text">the future</span>, together.</>}
-              description="Open to AI engineering roles, freelance projects, and research collaborations."
-            />
-
-            <div className="space-y-3">
-              {[
-                { label: "Email", value: "huma.taj@example.com", icon: "✉" },
-                { label: "Location", value: "Lahore, Pakistan", icon: "◉" },
-                { label: "Availability", value: "Open to opportunities", icon: "●" },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-4 glass rounded-xl p-3">
-                  <span className="size-9 rounded-full bg-plasma/10 border border-plasma/30 flex items-center justify-center text-plasma">
-                    {item.icon}
-                  </span>
-                  <div>
-                    <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{item.label}</div>
-                    <div className="text-sm font-medium">{item.value}</div>
-                  </div>
-                </div>
+            <ul className="mt-12 space-y-3">
+              {socialLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="text-[15px] text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary"
+                  >
+                    {link.label}
+                  </a>
+                </li>
               ))}
-            </div>
-          </motion.div>
+            </ul>
+          </FadeIn>
 
-          <motion.form
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Thanks! I'll get back to you soon.");
-            }}
-            className="space-y-4 glass-strong rounded-3xl p-6 lg:p-8"
-          >
-            <div>
-              <label className="text-[10px] font-mono uppercase tracking-widest text-plasma">Name</label>
-              <input
-                required
-                type="text"
-                className="mt-1 w-full bg-transparent border-b border-border focus:border-plasma outline-none py-2 text-foreground placeholder:text-muted-foreground/50"
-                placeholder="Your name"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] font-mono uppercase tracking-widest text-plasma">Email</label>
-              <input
-                required
-                type="email"
-                className="mt-1 w-full bg-transparent border-b border-border focus:border-plasma outline-none py-2 text-foreground placeholder:text-muted-foreground/50"
-                placeholder="you@example.com"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] font-mono uppercase tracking-widest text-plasma">Message</label>
-              <textarea
-                required
-                rows={4}
-                className="mt-1 w-full bg-transparent border-b border-border focus:border-plasma outline-none py-2 text-foreground placeholder:text-muted-foreground/50 resize-none"
-                placeholder="Tell me about your project..."
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full px-6 py-4 bg-plasma text-void font-bold text-sm uppercase tracking-widest rounded-xl hover:scale-[1.02] transition-transform glow-cyan"
-            >
-              Send Message
-            </button>
-          </motion.form>
+          <FadeIn delay={0.08}>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="label-caps mb-3 block">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  required
+                  value={form.name}
+                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                  className="w-full border border-border bg-white px-4 py-3 text-[15px] text-foreground outline-none transition-colors focus:border-primary"
+                  placeholder="Your name"
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="label-caps mb-3 block">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                  className="w-full border border-border bg-white px-4 py-3 text-[15px] text-foreground outline-none transition-colors focus:border-primary"
+                  placeholder="you@company.com"
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="label-caps mb-3 block">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  required
+                  rows={5}
+                  value={form.message}
+                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+                  className="w-full resize-none border border-border bg-white px-4 py-3 text-[15px] text-foreground outline-none transition-colors focus:border-primary"
+                  placeholder="Tell me about your project or research..."
+                />
+              </div>
+              <button type="submit" className="btn-primary">
+                Send message
+              </button>
+            </form>
+          </FadeIn>
         </div>
       </div>
-
-      <footer className="mt-16 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="text-xs text-muted-foreground font-mono">
-          © 2026 Huma Taj Muhammad · All systems nominal
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="size-1.5 rounded-full bg-plasma animate-pulse" />
-          <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-            Crafted with neural precision
-          </span>
-        </div>
-      </footer>
     </section>
   );
 }

@@ -1,98 +1,79 @@
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
-const links = [
-  { href: "#about", label: "About" },
-  { href: "#stack", label: "Stack" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#lab", label: "Lab" },
-  { href: "#contact", label: "Contact" },
-];
+import { navLinks, siteName } from "@/content/portfolio";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <motion.nav
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl"
+    <header
+      className={cn(
+        "sticky top-0 z-50 transition-colors duration-300",
+        scrolled ? "border-b border-border bg-[#FAF8F5]/95" : "bg-[#FAF8F5]",
+      )}
     >
-      <div
-        className={`glass-strong rounded-full px-4 sm:px-6 py-3 flex items-center justify-between transition-all ${
-          scrolled ? "shadow-2xl shadow-core/10" : ""
-        }`}
-      >
-        <a href="#top" className="flex items-center gap-2 shrink-0">
-          <span className="relative flex size-3">
-            <span className="absolute inset-0 rounded-full bg-plasma animate-ping opacity-60" />
-            <span className="relative size-3 rounded-full bg-plasma glow-cyan" />
-          </span>
-          <span className="font-display font-extrabold tracking-tight text-lg sm:text-xl">
-            HTM<span className="text-plasma">.AI</span>
-          </span>
+      <nav className="container-lab flex h-16 items-center justify-between sm:h-[4.25rem]">
+        <a href="#top" className="font-display text-[15px] font-medium tracking-[-0.02em] text-foreground">
+          {siteName}
         </a>
 
-        <div className="hidden md:flex items-center gap-7 text-sm">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-muted-foreground hover:text-plasma transition-colors font-medium"
-            >
-              {l.label}
-            </a>
+        <ul className="hidden items-center gap-10 md:flex">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            </li>
           ))}
-        </div>
-
-        <a
-          href="#contact"
-          className="hidden md:inline-flex items-center gap-2 bg-plasma text-void font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-full hover:scale-105 transition-transform"
-        >
-          Hire Me
-        </a>
+        </ul>
 
         <button
-          aria-label="Toggle menu"
-          onClick={() => setOpen((o) => !o)}
-          className="md:hidden glass rounded-full p-2"
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((v) => !v)}
+          className="flex flex-col gap-1.5 p-2 md:hidden"
         >
-          <div className="space-y-1.5">
-            <span className={`block h-0.5 w-5 bg-foreground transition ${open ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`block h-0.5 w-5 bg-foreground transition ${open ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-5 bg-foreground transition ${open ? "-translate-y-2 -rotate-45" : ""}`} />
-          </div>
+          <span className={cn("h-px w-5 bg-foreground transition-transform", open && "translate-y-[3.5px] rotate-45")} />
+          <span className={cn("h-px w-5 bg-foreground transition-opacity", open && "opacity-0")} />
+          <span className={cn("h-px w-5 bg-foreground transition-transform", open && "-translate-y-[3.5px] -rotate-45")} />
         </button>
-      </div>
+      </nav>
 
       {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden glass-strong mt-2 rounded-2xl p-4 flex flex-col gap-3"
-        >
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-sm font-medium text-muted-foreground hover:text-plasma py-1"
-            >
-              {l.label}
-            </a>
-          ))}
-        </motion.div>
+        <div className="border-t border-border bg-[#FAF8F5] md:hidden">
+          <ul className="container-lab flex flex-col gap-1 py-4">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="block py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
-    </motion.nav>
+    </header>
   );
 }

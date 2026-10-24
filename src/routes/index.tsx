@@ -1,51 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar } from "@/components/portfolio/Navbar";
-import { Background } from "@/components/portfolio/Background";
-import { Hero } from "@/components/portfolio/Hero";
-import { About } from "@/components/portfolio/About";
-import { TechStack } from "@/components/portfolio/TechStack";
-import { Projects } from "@/components/portfolio/Projects";
-import { Experience } from "@/components/portfolio/Experience";
-import { AILab } from "@/components/portfolio/AILab";
-import { Certifications } from "@/components/portfolio/Certifications";
-import { Contact } from "@/components/portfolio/Contact";
-import { Chatbot } from "@/components/portfolio/Chatbot";
+import { LabExperience } from "@/components/lab/LabExperience";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Huma Taj Muhammad — AI Developer & Generative AI Engineer" },
+      { title: "Huma Taj — AI Engineer & Researcher" },
       {
         name: "description",
         content:
-          "Huma Taj Muhammad — AI Developer in Lahore building intelligent web apps, computer vision systems, generative AI tools, chatbots, and Python backends.",
+          "Huma Taj builds intelligent systems combining AI, Computer Vision, and scalable backend architecture. AI Engineer & Researcher based in Lahore, Pakistan.",
       },
-      { property: "og:title", content: "Huma Taj Muhammad — AI Developer" },
+      { property: "og:title", content: "Huma Taj — AI Engineer & Researcher" },
       {
         property: "og:description",
-        content: "Crafting Intelligent AI Systems for the Future.",
+        content:
+          "Turning complex problems into intelligent systems.",
       },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
 });
 
 function Index() {
-  return (
-    <div className="relative min-h-screen text-foreground overflow-x-hidden">
-      <Background />
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <TechStack />
-        <Projects />
-        <Experience />
-        <AILab />
-        <Certifications />
-        <Contact />
-      </main>
-      <Chatbot />
-    </div>
-  );
+  return <LabExperience />;
 }

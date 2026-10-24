@@ -1,15 +1,7 @@
 import { motion } from "framer-motion";
 import aiLab from "@/assets/ai-lab.jpg";
+import { aiLabBuilds } from "@/content/portfolio";
 import { SectionHeader } from "./SectionHeader";
-
-const builds = [
-  { label: "LLM Agents", value: "Autonomous reasoning loops with tool use" },
-  { label: "RAG Systems", value: "Document-grounded chatbots, vector search" },
-  { label: "Vision Pipelines", value: "Detection, pose, OCR, segmentation" },
-  { label: "Diffusion Tools", value: "Image gen, restoration, editing" },
-  { label: "Voice AI", value: "STT, TTS, conversational interfaces" },
-  { label: "Custom Models", value: "Fine-tuning, LoRA, distillation" },
-];
 
 export function AILab() {
   return (
@@ -27,7 +19,7 @@ export function AILab() {
         />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {builds.map((b, i) => (
+          {aiLabBuilds.map((b, i) => (
             <motion.div
               key={b.label}
               initial={{ opacity: 0, y: 20 }}
