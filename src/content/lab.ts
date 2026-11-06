@@ -116,41 +116,56 @@ export const featuredProjects = [
   },
 ] as const;
 
+export const servicesSection = {
+  label: "Capabilities",
+  titleTop: "Services",
+  titleBottom: "I offer",
+  subtitle:
+    "From intelligent chatbots to computer vision systems — here's how I can help bring your AI ideas to life.",
+  cta: { label: "Discuss a project", href: "#contact" },
+} as const;
+
 export const serviceItems = [
   {
     title: "AI Chatbots & LLM Apps",
     desc: "Custom chatbots with RAG, memory, and agent workflows built for enterprise teams.",
     color: "#FFF3C4",
+    accent: "#D97706",
     icon: "bot" as const,
   },
   {
     title: "Computer Vision",
     desc: "Real-time pose tracking, object detection, and image analysis for production use cases.",
     color: "#EDE9FE",
+    accent: "#7C3AED",
     icon: "eye" as const,
   },
   {
     title: "Generative AI Solutions",
     desc: "Content generation, story engines, and creative AI tools tailored to your product.",
     color: "#FFE8CC",
+    accent: "#EA580C",
     icon: "sparkles" as const,
   },
   {
     title: "Backend & API Development",
     desc: "Scalable Python backends, REST APIs, and ML model deployment pipelines.",
     color: "#D1FAE5",
+    accent: "#059669",
     icon: "server" as const,
   },
   {
     title: "Full-Stack AI Products",
     desc: "End-to-end intelligent products — from research prototype to production-ready app.",
     color: "#DCFCE7",
+    accent: "#0891B2",
     icon: "layers" as const,
   },
   {
     title: "AI Consulting & Integration",
     desc: "Strategy, feasibility review, and integrating AI into existing products and workflows.",
     color: "#FCE7F3",
+    accent: "#DB2777",
     icon: "lightbulb" as const,
   },
 ] as const;
